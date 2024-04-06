@@ -25,7 +25,7 @@ const SideNav = () => {
     { id: 1, name: "Recently visited", icon: RiCommunityFill },
     { id: 2, name: "Your communities", icon: CgCommunity },
   ];
-const [isOpened, setOpen] = useState(true);
+const [isOpened, setOpen] = useState(false);
 const [isDark, setDark]  = useState(currentTheme == 'dark' ? true: false);
 const toggleDrawer = () => {
   setOpen(v => !v);
@@ -37,14 +37,14 @@ const changeTheme = () => {
 }
   return (
     <>
-    <Button onClick={toggleDrawer} m={2} mt={3} variant="ghost" ><Icon as={MdOutlineAccountCircle} boxSize={6}></Icon></Button>
+    <Button colorScheme="transparent" onClick={toggleDrawer} m={2} mt={3} variant="ghost" ><Icon as={MdOutlineAccountCircle} boxSize={6}></Icon></Button>
     <Drawer isOpen={isOpened} onClose={toggleDrawer} placement="left">
       <DrawerContent bgColor="bgcolor">
       <DrawerHeader>
         <Flex alignItems="center" justifyContent="space-between">
         <Text>Account</Text>
         {/* <IconButton icon={<MdOutlineAccountCircle />} variant="ghost" size="lg"></IconButton> */}
-        <Button onClick={toggleDrawer} variant="ghost" ><Icon as={MdOutlineAccountCircle} boxSize={6}></Icon></Button>        </Flex>
+        <Button colorScheme="transparent" onClick={toggleDrawer} variant="ghost" ><Icon as={MdOutlineAccountCircle} boxSize={6}></Icon></Button>        </Flex>
       </DrawerHeader>
       <DrawerBody>
         <VStack>
