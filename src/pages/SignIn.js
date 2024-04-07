@@ -4,7 +4,9 @@ import {
   Container,
   Flex,
   FormLabel,
+  HStack,
   Icon,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,9 +15,15 @@ import {
 import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { signInWithEmail } from "../modules/firestore/auth";
+import { signInWithEmail, signInWithProvider } from "../modules/firestore/auth";
 import DarkIcon from "../components/DarkIcon";
-
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { login as loginServer } from "../modules/api/login";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../modules/stores/userSlice";
+import { useDispatch } from "react-redux";
 export default function SignIn() {
   const [email, setEmail] = useState("vijay@ardhika.com");
   const [pass, setPass] = useState("123456");
@@ -31,11 +39,33 @@ export default function SignIn() {
     setBtnLoading(true);
     // console.log(email, pass);
     signInWithEmail(email, pass)
-      .then()
+      .then((user) => {
+        proceedLogin(user);
+      })
       .catch(() => {
         console.log("failed");
       })
       .finally(() => setBtnLoading(false));
+  };
+  const provideLogin = (id) => {
+    signInWithProvider(
+      id,
+      (user) => {
+        // console.log(user)
+        proceedLogin(user);
+      },
+      (f) => {
+        console.log("failing", f);
+      }
+    );
+  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const proceedLogin = async (user) => {
+    const resp = await loginServer(user);
+    // console.log(resp);
+    dispatch(setUser(resp));
+    navigate("/app");
   };
   return (
     <>
@@ -102,6 +132,27 @@ export default function SignIn() {
             >
               Login
             </Button>
+          </Container>
+          <Container mt={4}>
+            <HStack justifyContent="center" spacing={4}>
+              <IconButton
+                onClick={() => provideLogin("google")}
+                isRound={true}
+                icon={<FcGoogle />}
+              ></IconButton>
+              <IconButton
+                onClick={() => provideLogin("facebook")}
+                isRound={true}
+                colorScheme="facebook"
+                icon={<FaFacebook />}
+              ></IconButton>
+              <IconButton
+                onClick={() => provideLogin("twitter")}
+                isRound={true}
+                colorScheme="twitter"
+                icon={<FaTwitter />}
+              ></IconButton>
+            </HStack>
           </Container>
         </VStack>
       </Container>
