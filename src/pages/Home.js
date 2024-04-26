@@ -26,6 +26,9 @@ export default function Home() {
     navigate("community/new");
   };
   const user = useSelector((state) => state.user);
+  const enterCom = (c) => {
+    navigate("community/" + c.name);
+  }
   // console.log("huur", user);
   return (
     <>
@@ -48,7 +51,7 @@ export default function Home() {
             <AccordionPanel pb={4}>
               <VStack>
                 {user.communitiesin.map((c) => {
-                  return <Button key={c._id} variant="ghost" colorScheme="primary">{c.name}</Button>;
+                  return <Button key={c._id} variant="ghost" colorScheme="primary" onClick={() => enterCom(c)}>{c.name} </Button>;
                 })}
               </VStack>
             </AccordionPanel>

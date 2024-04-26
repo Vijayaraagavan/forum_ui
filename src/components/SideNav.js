@@ -30,8 +30,18 @@ const SideNav = () => {
   console.log(themeCtx, "adass");
   const { toggleTheme, current: currentTheme } = themeCtx;
   const navs = [
-    { id: 1, name: "Recently visited", icon: RiCommunityFill },
-    { id: 2, name: "Your communities", icon: CgCommunity },
+    {
+      id: 1,
+      name: "Recently visited",
+      icon: RiCommunityFill,
+      link: "/app/community/recent",
+    },
+    {
+      id: 2,
+      name: "Your communities",
+      icon: CgCommunity,
+      link: "/app/community/recent",
+    },
   ];
   const [isOpened, setOpen] = useState(false);
   const [isDark, setDark] = useState(currentTheme == "dark" ? true : false);
@@ -45,6 +55,9 @@ const SideNav = () => {
   const logout = () => {
     signOut();
     window.location = "/signIn";
+  };
+  const goTo = (c) => {
+    window.location = c.link;
   };
   return (
     <>
@@ -85,6 +98,7 @@ const SideNav = () => {
                       bgColor: "teal",
                       color: "white",
                     }}
+                    onClick={() => goTo(i)}
                   >
                     <Icon as={i.icon} mr={2} boxSize={6}></Icon>
                     <Text

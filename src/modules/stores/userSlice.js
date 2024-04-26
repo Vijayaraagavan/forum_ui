@@ -18,6 +18,9 @@ export const userSlice = createSlice({
       state.id = id;
     },
     setUser: (state, {payload: user}) => {
+      if (!user) {
+        return;
+      }
       state.id = user._id;
       state.uid = user.uid;
       state.email = user.email;
