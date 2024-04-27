@@ -1,0 +1,9 @@
+.centernav {
+    position: relative;
+    top: 50px;
+    justify-content: center;
+}
+.footer {
+    padding: 8px;
+    justify-content: center;
+}

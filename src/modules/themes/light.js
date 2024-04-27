@@ -1,3 +1,5 @@
+import general from "./general";
+
 export default {
   colors: {
     primary: {
@@ -12,9 +14,12 @@ export default {
       800: "#4e1400",
       900: "#1e0200",
     },
+    text: 'black',
+    cardShadow: 'rgba(0, 0, 0, 1)'
     // bgcolor: 'black',
     // currentColor: 'white'
   },
+  general: general
   //   styles: {
   //     global: {
   //         body: {

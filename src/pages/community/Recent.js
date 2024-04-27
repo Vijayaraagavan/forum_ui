@@ -32,7 +32,9 @@ export default function Recent() {
       processCom(resp.data.communities);
     });
   }, []);
-  const join = (c) => {
+  const join = (e, c) => {
+    e.stopPropagation();
+    
     axios
       .post(apiUrl + "api/community/" + c._id + "/join", {
         userId: userId,
@@ -42,7 +44,9 @@ export default function Recent() {
         updateCom(resp.data.community);
       });
   };
-  const leave = (c) => {
+  const leave = (e, c) => {
+    e.stopPropagation();
+
     axios
       .post(apiUrl + "api/community/" + c._id + "/leave", {
         userId: userId,
@@ -73,7 +77,7 @@ export default function Recent() {
       <h3>Top Trends</h3>
       {communities.map((c) => {
         return (
-          <Card marginY={2}>
+          <Card key={c._id} marginY={2}>
             <CardHeader p={2}>
               <Flex alignItems="center" onClick={() => goToCom(c)}>
                 <h2>{c.name}</h2>
@@ -81,7 +85,7 @@ export default function Recent() {
                 {!c.joined && (
                   <Button
                     colorScheme="transparent"
-                    onClick={() => join(c)}
+                    onClick={(e) => join(e, c)}
                     isDisabled={c.joined}
                   >
                     <Icon as={FaUserPlus} color="green"></Icon>
@@ -90,7 +94,7 @@ export default function Recent() {
                 {c.joined && (
                   <Button
                     colorScheme="transparent"
-                    onClick={() => leave(c)}
+                    onClick={(e) => leave(e, c)}
                     isDisabled={!c.joined}
                   >
                     <Icon as={FaUserMinus} color="red"></Icon>
